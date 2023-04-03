@@ -26,7 +26,7 @@ struct Student
 
 } s[25];
 
-void login();
+void studentLogin();
 
 void registr();
 
@@ -101,7 +101,7 @@ int main() {
 
   case 1:
 
-    login();
+    studentLogin();
 
     break;
 
@@ -575,24 +575,28 @@ void teacher_login()
     main();
   }
 }
-
-void login()
+//Changed and added the student login portion
+void studentLogin()
 
 {
 
   int count;
-
+  int student_choice;
   string user, pass, u, p;
 
   system("cls");
 
   cout << "please enter the following details" << endl;
 
-  cout << "USERNAME :";
+  cout << endl;
+  
+  cout << "Username :";
 
   cin >> user;
 
-  cout << "PASSWORD :";
+  cout << endl;
+
+  cout << "Password :";
 
   cin >> pass;
 
@@ -610,17 +614,91 @@ void login()
 
       system("cls");
     }
+      else
+
+  {
+
+    cout << "\nLOGIN ERROR\nPlease check your username and password\n";
+
+    cout << endl;
+    
+    main();
+  }
   }
 
   input.close();
+  
 
   if (count == 1)
 
   {
 
     cout << "\nHello " << user
-         << "\nLOGIN SUCESS\nWelcome to the main page.\n\n";
+         << "\nWelcome to the main page.\n\n";
+do {
 
+      cout << "Menu:" << endl;
+
+      cout << "1. Display class list" << endl;
+
+      cout << "2. Display Student Reports" << endl;
+
+      cout << "3. Directory for teachers and faculty" << endl;
+
+      cout << "4. Contact faculty" << endl;
+
+      cout << "5. Exit" << endl;
+
+      cout << "Enter your choice: \n";
+
+      cin >> student_choice;
+
+      cout << "\n";
+
+      switch (student_choice)
+
+      {
+
+      case 1:
+
+        displayClassList();
+
+        break;
+
+      case 2:
+
+        displayStudentReports();
+
+        break;
+
+      case 3:
+
+        facultyDirectory();
+
+        break;
+
+      case 4:
+
+        contactFaculty();
+
+      case 5:
+
+        cout << "Goodbye!" << endl;
+
+        main();
+
+        break;
+
+      default:
+
+        cout << "Invalid choice. Please try again." << endl;
+
+        break;
+      }
+
+    } while (student_choice != 5);
+
+  }
     cin.get();
 
     cin.get();
@@ -629,15 +707,8 @@ void login()
 
   }
 
-  else
 
-  {
 
-    cout << "\nLOGIN ERROR\nPlease check your username and password\n";
-
-    main();
-  }
-}
 
 void registr()
 
@@ -1189,7 +1260,7 @@ void display()
 
 void displayClassList() {
 
-  cout << "Displaying class list for student: Trevor McGee \n" << endl;
+  cout << "Displaying class list for student\n" << endl;
 
   cout << "Subject: English" << endl;
 
@@ -1216,7 +1287,8 @@ void displayClassList() {
 
 void displayStudentReports() {
 
-  cout << "Displaying current grades for student: Trevor McGee \n" << endl;
+  //changed it so that it's not specific to which user and can use it to display on different profiles
+  cout << "Displaying current grades for student:\n" << endl;
 
   cout << "Subject: English" << endl;
 
@@ -1228,8 +1300,9 @@ void displayStudentReports() {
 
   cout << "Term 4: A+ " << endl;
 
-  cout << "Teacher comments: Trevor has shown great improvement in his "
-          "English studies this year - Mrs MacDonald"
+  //and here too
+
+  cout << "Teacher comments: 'Shown great improvement in his studies so far this year - Mrs MacDonald"
        << endl;
 }
 
