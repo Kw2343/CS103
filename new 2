@@ -1300,10 +1300,12 @@ void displayStudentReports() {
 
   cout << "Term 4: A+ " << endl;
 
-  //and here too
+  //and here tpp
 
   cout << "Teacher comments: 'Shown great improvement in his studies so far this year - Mrs MacDonald"
        << endl;
+
+  cout << endl;
 }
 
 void facultyDirectory() {
@@ -1315,4 +1317,6 @@ void facultyDirectory() {
   cout << "Vice-Principle:  George Glass - PH: (ext. 710)" << endl;
 
   cout << "Administration & Reception: Heather McGowan PH: (ext. 705 )" << endl;
+
+  cout << endl;
 }
