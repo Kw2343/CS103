@@ -661,7 +661,7 @@ void admin_login()
 
       cout << "1. Add Class list\n";
 
-      cout << "2. Update/delete class\n";
+      cout << "2. Delete class\n";
 
       cout << "3. Login logs\n";
 
@@ -684,24 +684,20 @@ void admin_login()
       case 2:
       // add code for update/delete class menu
         int update_choice;
-        cout << "\n1. Update Class List\n";
-        cout << "2. Delete Class List\n";
-        cout << "3. Return to last menu";
+        cout << "1. Delete Class List\n";
+        cout << "2. Return to last menu";
         cout << "Enter your choice: ";
         cin >> update_choice;
      switch (update_choice)
       {
       case 1:
-        updateClassList();
-        break;
-      case 2:
         deleteClassList();
         break;
       default:
         cout << "\nInvalid choice! Please try again.\n";
         break;
       
-      case 3:
+      case 2:
       break;
       
       }
@@ -711,13 +707,13 @@ void admin_login()
 
       
 
-      case 4:
+      case 3:
 //added in login log issue
         
         
         break;
 
-      case 5:
+      case 4:
 
         cout << "Goodbye!";
         main();
@@ -762,7 +758,7 @@ void insertClassList()
     cin >> teacher_name;
     cout<<"\n\n Enter Subject: ";
     cin >> subject;
-    cout<<"\n\n Enter Timetable: ";
+    cout<<"\n\n Enter Time: ";
     cin >> timetable;
    
 
@@ -802,56 +798,7 @@ void displayClassList()
     cin.get();
 }
 
-void updateClassList() {
-    string teacher_name, subject, timetable;
-    bool found = false;
 
-    system("cls");
-    cout << "\n\n\t\t\t*** Update class list ***";
-    cout << "\n\n Enter Teacher's name to update: ";
-    cin >> teacher_name;
-
-    // Open the input file stream for reading
-    ifstream infile("class.txt");
-    if (!infile) {
-        cout << "\n\n Error: Could not open file for reading.";
-        return;
-    }
-
-    // Open the output file stream for writing
-    ofstream outfile("temp.txt");
-    if (!outfile) {
-        cout << "\n\n Error: Could not open file for writing.";
-        infile.close();
-        return;
-    }
-
-    // Read each line from the input file and write to the output file
-    while (infile >> teacher_name >> subject >> timetable) {
-        if (teacher_name == teacher_name) {
-            cout << "\n\n Enter new Subject: ";
-            cin >> subject;
-            cout << "\n\n Enter new Timetable: ";
-            cin >> timetable;
-            found = true;
-        }
-        outfile << teacher_name << " " << subject << " " << timetable << endl;
-    }
-
-    // Close the file streams
-    infile.close();
-    outfile.close();
-
-    // Replace the input file with the output file
-    if (found) {
-        remove("class.txt");
-        rename("temp.txt", "class.txt");
-        cout << "\n\n *** Update class list Successfully ***";
-    } else {
-        remove("temp.txt");
-        cout << "\n\n No record found with Teacher's name: " << teacher_name;
-    }
-}
 void deleteClassList() {
     string teacher_name;
     bool found = false;
@@ -933,4 +880,3 @@ void parentMenu() {
         }
     } while (choice != 'B' && choice != 'b');
 }
-
