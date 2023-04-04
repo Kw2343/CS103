@@ -3,6 +3,7 @@
 #include<fstream>
 #include<stdlib.h>
 #include<string.h>
+#include <sstream>
 
 using namespace std;
 int i=0;
@@ -23,10 +24,14 @@ void admin_login();
 void insert();
 void display();
 void delete_record();
-void displayClassList() ;
+void insertClassList() ;
 void facultyDirectory();
 void contactFaculty();
 void loginLogLook();
+void displayClassList();
+void student_login();
+void updateClassList();
+void deleteClassList();
 
 
 
@@ -42,7 +47,8 @@ int main(){
         cout<<"3.Teacher Login"<<endl;
         cout<<"4.Parent Login"<<endl;
         cout<<"5.Admin Login"<<endl;
-        cout<<"6.Exit"<<endl;
+        cout<<"6.Student Login"<<endl;
+        cout<<"7.Exit"<<endl;
         cout<<"\nEnter your choice :";
         cin>>choice;
         cout<<endl;
@@ -63,8 +69,12 @@ int main(){
                 case 5:
                         admin_login();
                         break;
-
+                        
                 case 6:
+                        student_login();
+                        break;        
+
+                case 7:
                         cout<<"Thanks for using this program\n\n\n";
                         break;        
 
@@ -77,32 +87,6 @@ int main(){
         }      
 }
 
-void registr()
-
-{
-
-  string reguser, regpass, ru, rp;
-
-  system("cls");
-
-  cout << "Enter the username :";
-
-  cin >> reguser;
-
-  cout << "\nEnter the password :";
-
-  cin >> regpass;
-
-  ofstream reg("database.txt", ios::app);
-
-  reg << reguser << ' ' << regpass << endl;
-
-  system("cls");
-
-  cout << "\nRegistration Sucessful\n";
-
-  main();
-}
 
 void forgot() {
 
@@ -138,7 +122,7 @@ void forgot() {
 
     cin >> searchuser;
 
-    ifstream searchu("database.txt");
+    ifstream searchu("records.txt");
 
     while (searchu >> su >> sp)
 
@@ -203,7 +187,7 @@ void forgot() {
 
     cin >> searchpass;
 
-    ifstream searchp("database.txt");
+    ifstream searchp("records.txt");
 
     while (searchp >> su2 >> sp2)
 
@@ -272,6 +256,114 @@ void forgot() {
   }
 }
 
+void registr()
+{
+    string ruserId, rpassword;
+    system("cls");
+    cout << "\t\t\t Enter the Username : ";
+    cin >> ruserId;
+    cout << "\t\t\t Enter the Password : ";
+    cin >> rpassword;
+
+    // Write to the file "records.txt"
+    ofstream record("records.txt", ios::app);
+    record << ruserId << ' ' << rpassword << endl;
+    record.close(); // Close the file
+
+    // Write to the log file "registrationlog.txt"
+    ofstream log("registrationlog.txt", ios::app);
+    log << "New registration: " << ruserId << endl;
+    log.close(); // Close the file
+
+    system("cls");
+    cout << "\n\t\t\t Registration is successful! \n";
+    main();
+}
+
+void student_login()
+{
+    int count = 0;
+    int choice;
+    string user, pass, u, p;
+
+    system("cls");
+
+    cout << "Please enter the following details" << endl;
+    cout << "USERNAME :";
+    cin >> user;
+    cout << "PASSWORD :";
+    cin >> pass;
+
+    ifstream input("records.txt");
+    while (input >> u >> p)
+    {
+        if (u == user && p == pass)
+        {
+            count = 1;
+            system("cls");
+        }
+    }
+    input.close();
+
+    if (count == 1)
+    {
+        cout << "\nHello " << user << "\nLOGIN SUCCESS\nWelcome to the main page.\n\n";
+          char menu_choice;
+    do {
+        cout << "Welcome to the Student Portal. Please select from the following options" << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
+        cout << "1. Display Class List" << endl;
+        cout << "2. Display Student Reports" << endl;
+        cout << "3.Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> menu_choice;
+
+        switch(menu_choice) {
+            case '1':
+                displayClassList();
+                break;
+            case '2':
+                display();
+                break;
+                
+            case 3:
+                cout << "Returning to main menu..." << endl;
+                break;
+                
+            default:
+                cout << "" << endl;
+                break;
+        }
+    } while (menu_choice != '3');
+    }
+    else
+    {
+        cout << "\nLOGIN ERROR\nPlease check your username and password\n";
+        cout << "1. Forgot password?\n2. Register as a new user\n3. Go back to main menu\nEnter your choice: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            forgot();
+        }
+        else if (choice == 2)
+        {
+            registr();
+        }
+        else if (choice == 3)
+        {
+            main();
+        }
+        else
+        {
+            cout << "Invalid choice\n";
+            student_login();
+        }
+    }
+
+   
+}
+
+
 
 void teacher_login()
 {  
@@ -323,6 +415,7 @@ void teacher_login()
                         break;
                     case 4:
                         cout << "Returning to main menu...\n";
+                        main();
                         break;
                         
                     default:
@@ -353,42 +446,6 @@ void teacher_login()
     } while (num_attempts < 3);
 }
 
-void login()
-{
-       
-        int count;
-        string user,pass,u,p;
-        system("cls");
-        cout<<"please enter the following details"<<endl;
-        cout<<"USERNAME :";
-        cin>>user;
-        cout<<"PASSWORD :";
-        cin>>pass;
-        
-        ifstream input("database.txt");
-        while(input>>u>>p)
-        {
-                if(u==user && p==pass)
-        
-                {
-                        count=1;
-                        system("cls");
-                }
-        }
-        input.close();
-        if(count==1)
-        {
-                cout<<"\nHello "<<user<<"\nLOGIN SUCESS\nWelcome to the main page.\n\n";
-                cin.get();
-                cin.get();
-                main();
-        }
-        else
-        {
-                cout<<"\nLOGIN ERROR\nPlease check your username and password\n";
-                main();
-        }
-}
 
 
 void insert()
@@ -485,12 +542,6 @@ void delete_record()
         cout << "Record not found.\n";
     }
 }
-
-
-
-
-
-
 
 
 
@@ -608,15 +659,13 @@ void admin_login()
       cout << "\nWelcome " << username
            << " to Student Record Management System\n\n";
 
-      cout << "1. Add Record\n";
+      cout << "1. Add Class list\n";
 
-      cout << "2. Display Records\n";
+      cout << "2. Update/delete class\n";
 
-      cout << "3. Delete Record\n";
+      cout << "3. Login logs\n";
 
-      cout << "4. Login logs\n";
-
-      cout << "5. Exit\n";
+      cout << "4. Exit\n";
 
       cout << "Enter your choice: ";
 
@@ -628,27 +677,39 @@ void admin_login()
 
       case 1:
 
-        insert();
+        insertClassList();
 
         break;
 
       case 2:
-
-        cin.ignore(); // Clear input buffer
-
-        display();
-
-        cin.get();
-
-        cin.get();
-
+      // add code for update/delete class menu
+        int update_choice;
+        cout << "\n1. Update Class List\n";
+        cout << "2. Delete Class List\n";
+        cout << "3. Return to last menu";
+        cout << "Enter your choice: ";
+        cin >> update_choice;
+     switch (update_choice)
+      {
+      case 1:
+        updateClassList();
         break;
-
+      case 2:
+        deleteClassList();
+        break;
+      default:
+        cout << "\nInvalid choice! Please try again.\n";
+        break;
+      
       case 3:
-
-        delete_record();
+      break;
+      
+      }
+      break;
 
         break;
+
+      
 
       case 4:
 //added in login log issue
@@ -659,7 +720,8 @@ void admin_login()
       case 5:
 
         cout << "Goodbye!";
-
+        main();
+        return;
         break;
 
       default:
@@ -691,31 +753,137 @@ void admin_login()
 }
 
 
-void displayClassList() {
+void insertClassList()
+{
+    string teacher_name, subject, timetable;
+    system("cls");
+    cout<<"\n\n\t\t\t*** Insert class list ***";
+    cout<<"\n\n Enter Teacher's name: ";
+    cin >> teacher_name;
+    cout<<"\n\n Enter Subject: ";
+    cin >> subject;
+    cout<<"\n\n Enter Timetable: ";
+    cin >> timetable;
+   
 
-  cout << "Displaying class list for student\n" << endl;
+    // Write to the file "class.txt"
+    ofstream record("class.txt",ios::app);
+    
+   
+    record << teacher_name << ' ' << subject  << ' ' << timetable << endl;
+    record.close(); // Close the file
 
-  cout << "Subject: English" << endl;
+    // Display class list
+    displayClassList();
 
-  cout << "Teacher: Mrs Florence MacDonald \n" << endl;
+    system("pause");
+    system("cls");
 
-  cout << "Subject: Maths" << endl;
+}
 
-  cout << "Teacher: Mr George Hope \n" << endl;
+void displayClassList()
+{
+    system("cls");
+    cout << "\n\n\t\t\t*** Class List ***\n\n";
+    
+    // Read from the file "class.txt"
+    ifstream record("class.txt");
+    string teacher_name, subject, timetable;
+     cout<<"\n\n\t\t Teacher name \t\t Subject\t\t Time";
+    while (record >> teacher_name >> subject >> timetable)
+    {
+     cout<<"\n\n\t\t"<< teacher_name <<"\t\t\t" << subject <<"\t\t\t"<<timetable<<"\n";
+       
+    }
+    record.close(); // Close the file
 
-  cout << "Subject: Social Studies" << endl;
+    cout << "\nPress any key to continue...";
+    cin.ignore();
+    cin.get();
+}
 
-  cout << "Teacher: Miss Jane McCain\n" << endl;
+void updateClassList() {
+    string teacher_name, subject, timetable;
+    bool found = false;
 
-  cout << "Subject: Science" << endl;
+    system("cls");
+    cout << "\n\n\t\t\t*** Update class list ***";
+    cout << "\n\n Enter Teacher's name to update: ";
+    cin >> teacher_name;
 
-  cout << "Teacher: Ms Joy Board \n" << endl;
+    // Open the input file stream for reading
+    ifstream infile("class.txt");
+    if (!infile) {
+        cout << "\n\n Error: Could not open file for reading.";
+        return;
+    }
 
-  cout << "Subject: P.E." << endl;
+    // Open the output file stream for writing
+    ofstream outfile("temp.txt");
+    if (!outfile) {
+        cout << "\n\n Error: Could not open file for writing.";
+        infile.close();
+        return;
+    }
 
-  cout << "Teacher: Mr Jordan Bulk \n" << endl;
+    // Read each line from the input file and write to the output file
+    while (infile >> teacher_name >> subject >> timetable) {
+        if (teacher_name == teacher_name) {
+            cout << "\n\n Enter new Subject: ";
+            cin >> subject;
+            cout << "\n\n Enter new Timetable: ";
+            cin >> timetable;
+            found = true;
+        }
+        outfile << teacher_name << " " << subject << " " << timetable << endl;
+    }
 
-  // code to display class list
+    // Close the file streams
+    infile.close();
+    outfile.close();
+
+    // Replace the input file with the output file
+    if (found) {
+        remove("class.txt");
+        rename("temp.txt", "class.txt");
+        cout << "\n\n *** Update class list Successfully ***";
+    } else {
+        remove("temp.txt");
+        cout << "\n\n No record found with Teacher's name: " << teacher_name;
+    }
+}
+void deleteClassList() {
+    string teacher_name;
+    bool found = false;
+
+    cout << "Enter the name of the teacher to delete: ";
+    cin >> teacher_name;
+
+    ifstream infile("class.txt");
+    ofstream outfile("temp.txt");
+    if (!infile) {
+        cout << "Error: Cannot open file for reading.\n";
+        return;
+    }
+    string tname, subject, timetable;
+    while (infile >> tname >> subject >> timetable) {
+        if (tname != teacher_name) {
+            outfile << tname << " " << subject << " " << timetable << endl;
+        } else {
+            found = true;
+        }
+    }
+
+    infile.close();
+    outfile.close();
+
+    if (found) {
+        remove("class.txt");
+        rename("temp.txt", "class.txt");
+        cout << "Record deleted successfully.\n";
+    } else {
+        cout << "Record not found.\n";
+    }
 }
 
 
@@ -765,3 +933,4 @@ void parentMenu() {
         }
     } while (choice != 'B' && choice != 'b');
 }
+
