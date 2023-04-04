@@ -24,7 +24,6 @@ void insert();
 void display();
 void delete_record();
 void displayClassList() ;
-void displayStudentReports();
 void facultyDirectory();
 void contactFaculty();
 void loginLogLook();
@@ -436,7 +435,7 @@ void insert()
 void display()
 {
     system("cls");
-    cout << "\n\n\t\t\t *** Display All Record ***\n";
+    cout << "\n\n\t\t\t *** Display All Records ***\n";
     ifstream record("student.txt");
     if (!record) {
         cout << "Error: Cannot open file\n";
@@ -535,7 +534,7 @@ void parent_login()
             displayClassList();
             break;
           case 2:
-            displayStudentReports();
+            display();
             break;
           case 3:
             facultyDirectory();
@@ -719,28 +718,6 @@ void displayClassList() {
   // code to display class list
 }
 
-void displayStudentReports() {
-
-  //changed it so that it's not specific to which user and can use it to display on different profiles
-  cout << "Displaying current grades for student:\n" << endl;
-
-  cout << "Subject: English" << endl;
-
-  cout << "Term 1: C- " << endl;
-
-  cout << "Term 2: B+ " << endl;
-
-  cout << "Term 3: A- " << endl;
-
-  cout << "Term 4: A+ " << endl;
-
-  //and here tpp
-
-  cout << "Teacher comments: 'Shown great improvement in his studies so far this year - Mrs MacDonald"
-       << endl;
-
-  cout << endl;
-}
 
 void facultyDirectory() {
 
@@ -773,7 +750,7 @@ void parentMenu() {
                 displayClassList();
                 break;
             case '2':
-                displayStudentReports();
+                display();
                 break;
             case '3':
                facultyDirectory();
