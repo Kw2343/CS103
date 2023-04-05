@@ -328,6 +328,7 @@ void student_login()
                 
             case 3:
                 cout << "Returning to main menu..." << endl;
+                main();
                 break;
                 
             default:
