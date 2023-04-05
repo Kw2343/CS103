@@ -575,8 +575,7 @@ void parent_login()
         cout << "1. Display class list" << endl;
         cout << "2. Display Student Reports" << endl;
         cout << "3. Directory for teachers and faculty" << endl;
-        cout << "4. Contact faculty" << endl;
-        cout << "5. Exit" << endl;
+        cout << "4. Exit" << endl;
         cout << "Enter your choice: \n";
         cin >> parent_choice;
         cout << "\n";
@@ -591,9 +590,6 @@ void parent_login()
             facultyDirectory();
             break;
           case 4:
-            // call the function to contact faculty
-            break;
-          case 5:
             cout << "Goodbye!" << endl;
             main();
             break;
