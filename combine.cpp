@@ -15,7 +15,7 @@ struct Student
     string name, grade;
 } s[25];
 
-void login();
+
 void registr();
 void forgot();
 void teacher_login();
@@ -25,11 +25,12 @@ void insert();
 void display();
 void delete_record();
 void insertClassList() ;
-void contactFaculty();
-void loginLogLook();
+void facultyDirectory();
+void displayClassList();
 void student_login();
 void updateClassList();
 void deleteClassList();
+
 
 
 int count = 0;
@@ -84,7 +85,7 @@ int main(){
         }      
 }
 
-
+//Scott added this part 
 void forgot() {
 
   int ch;
@@ -253,6 +254,7 @@ void forgot() {
   }
 }
 
+//Scott added this part
 void registr()
 {
     string ruserId, rpassword;
@@ -277,7 +279,7 @@ void registr()
     main();
 }
 
-void student_login()
+void student_login() //Kelvin added
 {
     int count = 0;
     int choice;
@@ -325,6 +327,7 @@ void student_login()
                 
             case 3:
                 cout << "Returning to main menu..." << endl;
+                main();
                 break;
                 
             default:
@@ -362,7 +365,7 @@ void student_login()
 
 
 
-void teacher_login()
+void teacher_login() //kelvin did this part
 {  
     int teacher_choice;
     string teacher_username = "teacher";
@@ -444,7 +447,7 @@ void teacher_login()
 }
 
 
-
+//Kelvin added this part 
 void insert()
 {
     int id;
@@ -506,6 +509,7 @@ void display()
     record.close();
 }
 
+//Kelvin added this part
 void delete_record()
 {
     int id;
@@ -540,103 +544,10 @@ void delete_record()
     }
 }
 
-//Parent menu & option declarations - Justyne 
-void displayClassList() {
-    cout << "Displaying class list for student: \n" << endl;
-    cout << "Subject: English" << endl;
-    cout << "Teacher: Mrs Florence MacDonald \n" << endl;
-    cout << "Subject: Maths" << endl;
-    cout << "Teacher: Mr George Hope \n" << endl;
-    cout << "Subject: Social Studies" << endl;
-    cout << "Teacher: Miss Jane McCain\n" << endl;
-    cout << "Subject: Science" << endl;
-    cout << "Teacher: Ms Joy Board \n" << endl;
-    cout << "Subject: P.E. & Sports" << endl;
-    cout << "Teacher: Mr Jordan Bulk \n" << endl;
-}
-void displayStudentReports() {
-    
-    cout << "Displaying current grades for student \n" << endl;
-    cout << "Subject: English" << endl;
-    cout << "Term 1: C- " << endl;
-    cout << "Term 2: B+ " << endl;
-    cout << "Term 3: A- "  << endl;
-    cout << "Term 4: A+ \n" << endl;
-    "\n";
-    cout << "Subject: Maths" << endl;
-    cout << "Term 1: F " << endl;
-    cout << "Term 2: C+ " << endl;
-    cout << "Term 3: B- "  << endl;
-    cout << "Term 4: B+ " << endl;
-    "\n";
-    cout << "Subject: Social Studies" << endl;
-    cout << "Term 1: B+- " << endl;
-    cout << "Term 2: B+ " << endl;
-    cout << "Term 3: A- "  << endl;
-    cout << "Term 4: A \n" << endl;
-    "\n";
-    cout << "Subject: Science" << endl;
-    cout << "Term 1: B- " << endl;
-    cout << "Term 2: B+ " << endl;
-    cout << "Term 3: A+ "  << endl;
-    cout << "Term 4: A+ \n" << endl;
-    "\n";
-    cout << "Subject: P.E." << endl;
-    cout << "Term 1: D " << endl;
-    cout << "Term 2: D+ " << endl;
-    cout << "Term 3: C- "  << endl;
-    cout << "Term 4: C+ \n" << endl;
-    "\n";
-
-}
-void facultyDirectory() {
-    cout << "Faculty Contacts: " << endl;
-    cout << "----------------" << endl;
-    cout << "School landline: PH: 09 555 0813" << endl;
-    cout << "Principle:  Terry Johns - PH: (ext. 712)" << endl;
-    cout << "Vice-Principle:  George Glass - PH: (ext. 710)" << endl;  
-    cout << "Administration & Reception: Heather McGowan PH: (ext. 705 )" << endl;
-    cout << "Teacher Contacts: " << endl;
-    cout << "----------------" << endl;
-    cout << "English: Mrs Florence MacDonald - email: fmacdonald@school.ac.nz \n" << endl;
-    cout << "Maths: Mr George Hope - email: ghope@school.ac.nz \n" << endl;
-    cout << "Social Studies: Miss Jane McCain = email: jmccain@school.ac.nz\n" << endl;
-    cout << "Science: Ms Joy Board - email: jboard@school.ac.nz \n" << endl;
-    cout << "P.E. & Sports: Mr Jordan Bulk - email: jbulk@school.nz \n" << endl;
-}
-void parentMenu() {
-    char choice;
-    do {
-        cout << "Welcome to the Parents and Caregivers Menu. Please select from the following options" << endl;
-        cout << "------------------------------------------------------------------------------------" << endl;
-        cout << "1. Display Class List" << endl;
-        cout << "2. Display Student Reports" << endl;
-        cout << "3. Directory for teachers & faculty" << endl;
-        cout << "Q. Exit App" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch(choice) {
-            case '1':
-                displayClassList();
-                break;
-            case '2':
-                displayStudentReports();
-                break;
-            case '3':
-               facultyDirectory();
-                break;
-            case 'Q':
-            case 'q':
-                cout << " Thank you for using the School Information System!  Exiting now... \n" << endl;
-                exit (0);
-                break;
-        }
-    } while (choice != 'B' && choice != 'b');
-}
 
 
-void parent_login() // Parent Login by Kelvin
+
+void parent_login() //Parent menu and declaration - justyne 
 {
   int parent_choice;
   string parent_username = "parent";
@@ -654,10 +565,40 @@ void parent_login() // Parent Login by Kelvin
     if (username == parent_username && password == parent_password) {
       cout << "\nLogin successful!\n";
 
-      do {
-        parentMenu();
+      //added the extra login log coded here
 
-      } while (parent_choice != 3);
+      ofstream record("loginlog.txt", ios::app);
+      record << username << endl;
+      record.close();
+
+      do {
+        cout << "Menu:" << endl;
+        cout << "1. Display class list" << endl;
+        cout << "2. Display Student Reports" << endl;
+        cout << "3. Directory for teachers and faculty" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: \n";
+        cin >> parent_choice;
+        cout << "\n";
+        switch (parent_choice) {
+          case 1:
+            displayClassList();
+            break;
+          case 2:
+            display();
+            break;
+          case 3:
+            facultyDirectory();
+            break;
+          case 4:
+            cout << "Goodbye!" << endl;
+            main();
+            break;
+          default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+      } while (parent_choice != 4);
       break;
     } else {
       login_attempts--; // decrement the number of login attempts
@@ -672,7 +613,7 @@ void parent_login() // Parent Login by Kelvin
   } while (login_attempts > 0);
 }
 
-void admin_login()
+void admin_login() //scott did this part
 
 {
 
@@ -719,7 +660,7 @@ void admin_login()
 
       cout << "2. Delete class\n";
 
-      cout << "3. Login logs\n";
+      cout << "3. Display class list\n";
 
       cout << "4. Exit\n";
 
@@ -764,7 +705,8 @@ void admin_login()
       
 
       case 3:
-//added in login log issue
+      displayClassList();
+      break;
         
         
         break;
@@ -773,7 +715,6 @@ void admin_login()
 
         cout << "Goodbye!";
         main();
-        return;
         break;
 
       default:
@@ -781,7 +722,7 @@ void admin_login()
         cout << "\nInvalid choice! Please try again.\n";
       }
 
-      if (admin_choice != 7) {
+      if (admin_choice != 4) {
 
         cout << "\nPress Enter to continue...\n";
 
@@ -792,7 +733,7 @@ void admin_login()
 
       // Clear screen before displaying menu again
 
-    } while (admin_choice != 7);
+    } while (admin_choice != 4);
 
   } else
 
@@ -804,7 +745,7 @@ void admin_login()
   }
 }
 
-
+//Kelvin added this part
 void insertClassList()
 {
     string teacher_name, subject, timetable;
@@ -833,6 +774,29 @@ void insertClassList()
 
 }
 
+//kelvin added this part
+void displayClassList()
+{
+    system("cls");
+    cout << "\n\n\t\t\t*** Class List ***\n\n";
+    
+    // Read from the file "class.txt"
+    ifstream record("class.txt");
+    string teacher_name, subject, timetable;
+     cout<<"\n\n\t\t Teacher name \t\t Subject\t\t Time";
+    while (record >> teacher_name >> subject >> timetable)
+    {
+     cout<<"\n\n\t\t"<< teacher_name <<"\t\t\t" << subject <<"\t\t\t"<<timetable<<"\n";
+       
+    }
+    record.close(); // Close the file
+
+    cout << "\nPress any key to continue...";
+    cin.ignore();
+    cin.get();
+}
+
+//Kelvin added this part
 void deleteClassList() {
     string teacher_name;
     bool found = false;
@@ -867,3 +831,51 @@ void deleteClassList() {
     }
 }
 
+//Justyne added this part
+void facultyDirectory() {
+
+  cout << "School landline: PH: 09 555 0813" << endl;
+
+  cout << "Principle: Terry Johns - PH: (ext. 712)" << endl;
+
+  cout << "Vice-Principle:  George Glass - PH: (ext. 710)" << endl;
+
+  cout << "Administration & Reception: Heather McGowan PH: (ext. 705 )" << endl;
+
+  cout << endl;
+}
+
+//Justyne added this part
+void parentMenu() {
+    char choice;
+
+    do {
+        cout << "Welcome to the Parents and Caregivers Menu. Please select from the following options" << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
+        cout << "1. Display Class List" << endl;
+        cout << "2. Display Student Reports" << endl;
+        cout << "3. Directory for teachers & faculty" << endl;
+        cout << "B. Back" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case '1':
+                displayClassList();
+                break;
+            case '2':
+                display();
+                break;
+            case '3':
+               facultyDirectory();
+                break;
+            case 'B':
+            case 'b':
+                cout << "Returning to main menu..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    } while (choice != 'B' && choice != 'b');
+}
