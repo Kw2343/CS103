@@ -381,7 +381,7 @@ void teacher_login() //kelvin did this part
 
         if (username == teacher_username && password == teacher_password)
         {
-            cout << "\nAdmin login successful!\n";
+            cout << "\nTeacher login successful!\n";
             // Add admin features here
             cin.get();
             cin.get();
