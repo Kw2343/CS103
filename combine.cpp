@@ -26,12 +26,11 @@ void display();
 void delete_record();
 void insertClassList() ;
 void facultyDirectory();
-void displayClassList();
+void editClassList();
 void student_login();
 void updateClassList();
 void deleteClassList();
-
-
+void displayClassList();
 
 int count = 0;
 
@@ -775,7 +774,7 @@ void insertClassList()
 }
 
 //kelvin added this part
-void displayClassList()
+void editClassList()
 {
     system("cls");
     cout << "\n\n\t\t\t*** Class List ***\n\n";
@@ -848,7 +847,6 @@ void displayClassList() {
     cout << "Teacher: Mr Jordan Bulk \n" << endl;
 }
 void displayStudentReports() {
-    
     cout << "Displaying current grades for student \n" << endl;
     cout << "Subject: English" << endl;
     cout << "Term 1: C- " << endl;
@@ -926,3 +924,4 @@ void parentMenu() {
         }
     } while (choice != 'B' && choice != 'b');
 }
+//End of Parent Menu 
