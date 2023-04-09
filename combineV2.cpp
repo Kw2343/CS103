@@ -652,10 +652,8 @@ void parent_login() //Parent menu and declaration - justyne
           case 3:
             facultyDirectory();
             break;
-          case 'Q':
-          case 'q':
+            case 4:
             cout << " Thank you for using the School Information System!  Exiting now... \n" << endl;
-            main();
             break;
           default:
             cout << "Invalid choice. Please try again." << endl;
