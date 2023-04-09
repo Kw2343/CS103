@@ -1,742 +1,91 @@
-#include <iostream>
-
-#include <istream>
-
-#include <fstream>
-
-#include <stdlib.h>
-
-#include <string.h>
+#include<iostream>
+#include<istream>
+#include<fstream>
+#include<stdlib.h>
+#include<string.h>
+#include <sstream>
 
 using namespace std;
-
-int i = 0;
-
+int i=0;
 // Define Student struct outside of main() function
-
 struct Student
-
 {
-
-  int id;
-
-  float marks, per;
-
-  string name, grade;
-
+    int id;
+    float marks, per;
+    string name, grade;
 } s[25];
 
-void studentLogin();
 
 void registr();
-
 void forgot();
-
 void teacher_login();
-
 void parent_login();
-
 void admin_login();
-
 void insert();
-
 void display();
-
-void search();
-
-void update();
-
 void delete_record();
-
-void displayClassList();
-
-void displayStudentReports();
-
+void insertClassList() ;
 void facultyDirectory();
+void displayClassList();
+void student_login();
+void updateClassList();
+void deleteClassList();
 
-//added some functions (contact faculty is still in progress at this point)
-void contactFaculty();
 
-//Function to add login tracking. states the username of the person logging in and in what order they logged in.
-void loginLog();
-//A function allowing the login file to be looked at. For admin use.
-void loginLogLook();
 
 int count = 0;
 
-int main() {
+int main(){
+        int choice;
+        cout<<"***********************************************************************\n\n\n";
+        cout<<"                      Welcome to School Information System                \n\n";
+        cout<<"*******************        MENU        *******************************\n\n";
+        cout<<"1.Register"<<endl;
+        cout<<"2.Forgot Password or Username"<<endl;
+        cout<<"3.Teacher Login"<<endl;
+        cout<<"4.Parent Login"<<endl;
+        cout<<"5.Admin Login"<<endl;
+        cout<<"6.Student Login"<<endl;
+        cout<<"7.Exit"<<endl;
+        cout<<"\nEnter your choice :";
+        cin>>choice;
+        cout<<endl;
+        switch(choice)
+        {
+                case 1:
+                        registr();
+                        break;
+                case 2:
+                        forgot();
+                        break;
+                case 3:
+                        teacher_login();
+                        break;
+                case 4:
+                        parent_login();
+                        break;
+                case 5:
+                        admin_login();
+                        break;
+                        
+                case 6:
+                        student_login();
+                        break;        
 
-  int choice;
+                case 7:
+                        cout<<"Thanks for using this program\n\n\n";
+                        break;        
 
-  cout << "************************************************************"
-          "***********\n\n\n";
+                default:
+                        system("cls");
+                        cout<<"You've made a mistake , give it a try again\n"<<endl; 
+                        main();
 
-  cout << "                      Welcome to School Information System "
-          "               \n\n";
 
-  cout << "*******************        MENU       "
-          " *******************************\n\n";
-
-  cout << "1.Student Login" << endl;
-
-  cout << "2.Register" << endl;
-
-  cout << "3.Forgot Password or Username" << endl;
-
-  cout << "4.Teacher Login" << endl;
-
-  cout << "5.Parent Login" << endl;
-
-  cout << "6.Admin Login" << endl;
-
-  cout << "7.Exit" << endl;
-
-  cout << "\nEnter your choice :";
-
-  cin >> choice;
-
-  cout << endl;
-
-  switch (choice) {
-
-  case 1:
-
-    studentLogin();
-
-    break;
-
-  case 2:
-
-    registr();
-
-    break;
-
-  case 3:
-
-    forgot();
-
-    break;
-
-  case 4:
-
-    teacher_login();
-
-    break;
-
-  case 5:
-
-    parent_login();
-
-    break;
-
-  case 6:
-
-    admin_login();
-
-    break;
-
-  case 7:
-
-    cout << "Thanks for using this program\n\n\n";
-
-    break;
-
-  default:
-
-    system("cls");
-
-    cout << "You've made a mistake , give it a try again\n" << endl;
-
-    main();
-  }
-}
-//need to finish this part. need to create a contact form to add to a file.
-void contactFaculty() {}
-
-//the added function code
-void loginLog() {
-  ifstream record("loginlog.txt");
-
-  if (!record) {
-
-    cout << "\n\n Error: Cannot open file\n";
-
-    }
-    
-  }
-//added function code
-void loginLogLook(){
-          fstream myFile;
-        myFile.open("loginlog.txt", ios::in);
-        if (myFile.is_open()){
-          string line;
-          while (getline(myFile, line)) {
-            cout << line << endl;
-          }
-          myFile.close();
-        }
-  system("pause>0");
+        }      
 }
 
-void parent_login()
-
-{
-
-  int parent_choice;
-
-  string parent_username = "parent";
-
-  string parent_password = "parent123";
-
-  string username, password;
-
-  cout << "Enter Parent username: ";
-
-  cin >> username;
-
-  cout << "Enter Parent password: ";
-
-  cin >> password;
-
-  if (username == parent_username && password == parent_password)
-
-  {
-
-    cout << "\nLogin successful!\n";
-
-    //added the extra login log coded here
-
-    ofstream record("loginlog.txt", ios::app);
-
-    record << username << endl;
-
-    record.close();
-
-    do {
-
-      cout << "Menu:" << endl;
-
-      cout << "1. Display class list" << endl;
-
-      cout << "2. Display Student Reports" << endl;
-
-      cout << "3. Directory for teachers and faculty" << endl;
-
-      cout << "4. Contact faculty" << endl;
-
-      cout << "5. Exit" << endl;
-
-      cout << "Enter your choice: \n";
-
-      cin >> parent_choice;
-
-      cout << "\n";
-
-      switch (parent_choice)
-
-      {
-
-      case 1:
-
-        displayClassList();
-
-        break;
-
-      case 2:
-
-        displayStudentReports();
-
-        break;
-
-      case 3:
-
-        facultyDirectory();
-
-        break;
-
-      case 4:
-
-        contactFaculty();
-
-      case 5:
-
-        cout << "Goodbye!" << endl;
-
-        main();
-
-        break;
-
-      default:
-
-        cout << "Invalid choice. Please try again." << endl;
-
-        break;
-      }
-
-    } while (parent_choice != 5);
-
-  }
-
-  else
-
-  {
-
-    cout << "\nAdmin login failed. Incorrect username or password.\n";
-
-    main();
-  }
-}
-
-void admin_login()
-
-{
-
-  int admin_choice;
-  
-  string logs;
-  
-  string admin_username = "admin";
-
-  string admin_password = "admin123";
-
-  string username, password;
-
-  cout << "Enter admin username: ";
-
-  cin >> username;
-
-  cout << "Enter admin password: ";
-
-  cin >> password;
-
-  if (username == admin_username && password == admin_password)
-
-  {
-
-    cout << "\nAdmin login successful!\n";
-
-    //added admin login log also 
-
-    ofstream record("loginlog.txt", ios::app);
-
-    record << username << endl;
-
-    record.close(); 
-
-    do
-
-    {
-
-      cout << "\nWelcome " << username
-           << " to Student Record Management System\n\n";
-
-      cout << "1. Add Record\n";
-
-      cout << "2. Display Records\n";
-
-      cout << "3. Search Record\n";
-
-      cout << "4. Update Record\n";
-
-      cout << "5. Delete Record\n";
-
-      cout << "6. Login logs\n";
-
-      cout << "7. Exit\n";
-
-      cout << "Enter your choice: ";
-
-      cin >> admin_choice;
-
-      switch (admin_choice)
-
-      {
-
-      case 1:
-
-        insert();
-
-        break;
-
-      case 2:
-
-        cin.ignore(); // Clear input buffer
-
-        display();
-
-        cin.get();
-
-        cin.get();
-
-        break;
-
-      case 3:
-
-        cin.ignore(); // Clear input buffer
-
-        search();
-
-        cin.get();
-
-        cin.get();
-
-        break;
-
-      case 4:
-
-        update();
-
-        break;
-
-      case 5:
-
-        delete_record();
-
-        break;
-
-      case 6:
-//added in login log issue
-        cout << endl;
-        loginLogLook();
-        cout << endl;
-        
-        break;
-
-      case 7:
-
-        cout << "Goodbye!";
-
-        break;
-
-      default:
-
-        cout << "\nInvalid choice! Please try again.\n";
-      }
-
-      if (admin_choice != 7) {
-
-        cout << "\nPress Enter to continue...\n";
-
-        cin.get();
-      }
-
-      system("cls");
-
-      // Clear screen before displaying menu again
-
-    } while (admin_choice != 7);
-
-  } else
-
-  {
-
-    cout << "\nAdmin login failed. Incorrect username or password.\n";
-
-    main();
-  }
-}
-void teacher_login()
-
-{
-  int teacher_choice;
-
-  string teacher_username = "teacher";
-
-  string teacher_password = "teacher123";
-
-  string username, password;
-
-  cout << "Enter Teacher username: ";
-
-  cin >> username;
-
-  cout << "Enter Teacher password: ";
-
-  cin >> password;
-
-  if (username == teacher_username && password == teacher_password)
-
-  {
-
-    cout << "\nAdmin login successful!\n";
-
-    // Added login log portion here also for teacher login logs
-    ofstream record("loginlog.txt", ios::app);
-
-    record << username << endl;
-
-    record.close(); 
-
-    cin.get();
-
-    cin.get();
-
-    system("cls"); // Clear screen before displaying menu
-
-    do
-
-    {
-
-      cout << "\nWelcome " << username
-           << " to Student Record Management System\n\n";
-
-      cout << "1. Add Record\n";
-
-      cout << "2. Display Records\n";
-
-      cout << "3. Search Record\n";
-
-      cout << "4. Update Record\n";
-
-      cout << "5. Delete Record\n";
-
-      cout << "6. Exit\n";
-
-      cout << "Enter your choice: ";
-
-      cin >> teacher_choice;
-
-      switch (teacher_choice)
-
-      {
-
-      case 1:
-
-        insert();
-
-        break;
-
-      case 2:
-
-        cin.ignore(); // Clear input buffer
-
-        display();
-
-        cin.get();
-
-        cin.get();
-
-        break;
-
-      case 3:
-
-        cin.ignore(); // Clear input buffer
-
-        search();
-
-        cin.get();
-
-        cin.get();
-
-        break;
-
-      case 4:
-
-        update();
-
-        break;
-
-      case 5:
-
-        delete_record();
-
-        break;
-
-      case 6:
-
-        cout << "Goodbye!";
-
-        break;
-
-      default:
-
-        cout << "\nInvalid choice! Please try again.\n";
-      }
-
-      if (teacher_choice != 6) {
-
-        cout << "\nPress Enter to continue...\n";
-
-        cin.get();
-      }
-
-      system("cls"); // Clear screen before displaying menu again
-
-    } while (teacher_choice != 6);
-
-  }
-
-  else
-
-  {
-
-    cout << "\nAdmin login failed. Incorrect username or password.\n";
-
-    main();
-  }
-}
-//Changed and added the student login portion
-void studentLogin()
-
-{
-
-  int count;
-  int student_choice;
-  string user, pass, u, p;
-
-  system("cls");
-
-  cout << "please enter the following details" << endl;
-
-  cout << endl;
-  
-  cout << "Username :";
-
-  cin >> user;
-
-  cout << endl;
-
-  cout << "Password :";
-
-  cin >> pass;
-
-  ifstream input("database.txt");
-
-  while (input >> u >> p)
-
-  {
-
-    if (u == user && p == pass)
-
-    {
-
-      count = 1;
-
-      system("cls");
-    }
-      else
-
-  {
-
-    cout << "\nLOGIN ERROR\nPlease check your username and password\n";
-
-    cout << endl;
-    
-    main();
-  }
-  }
-
-  input.close();
-  
-
-  if (count == 1)
-
-  {
-
-    cout << "\nHello " << user
-         << "\nWelcome to the main page.\n\n";
-do {
-
-      cout << "Menu:" << endl;
-
-      cout << "1. Display class list" << endl;
-
-      cout << "2. Display Student Reports" << endl;
-
-      cout << "3. Directory for teachers and faculty" << endl;
-
-      cout << "4. Contact faculty" << endl;
-
-      cout << "5. Exit" << endl;
-
-      cout << "Enter your choice: \n";
-
-      cin >> student_choice;
-
-      cout << "\n";
-
-      switch (student_choice)
-
-      {
-
-      case 1:
-
-        displayClassList();
-
-        break;
-
-      case 2:
-
-        displayStudentReports();
-
-        break;
-
-      case 3:
-
-        facultyDirectory();
-
-        break;
-
-      case 4:
-
-        contactFaculty();
-
-      case 5:
-
-        cout << "Goodbye!" << endl;
-
-        main();
-
-        break;
-
-      default:
-
-        cout << "Invalid choice. Please try again." << endl;
-
-        break;
-      }
-
-    } while (student_choice != 5);
-
-  }
-    cin.get();
-
-    cin.get();
-
-    main();
-
-  }
-
-
-
-
-void registr()
-
-{
-
-  string reguser, regpass, ru, rp;
-
-  system("cls");
-
-  cout << "Enter the username :";
-
-  cin >> reguser;
-
-  cout << "\nEnter the password :";
-
-  cin >> regpass;
-
-  ofstream reg("database.txt", ios::app);
-
-  reg << reguser << ' ' << regpass << endl;
-
-  system("cls");
-
-  cout << "\nRegistration Sucessful\n";
-
-  main();
-}
-
+//forgot password retrieve from datase records.txt
 void forgot() {
 
   int ch;
@@ -771,7 +120,7 @@ void forgot() {
 
     cin >> searchuser;
 
-    ifstream searchu("database.txt");
+    ifstream searchu("records.txt");
 
     while (searchu >> su >> sp)
 
@@ -836,7 +185,7 @@ void forgot() {
 
     cin >> searchpass;
 
-    ifstream searchp("database.txt");
+    ifstream searchp("records.txt");
 
     while (searchp >> su2 >> sp2)
 
@@ -905,418 +254,636 @@ void forgot() {
   }
 }
 
-void insert()
-
+//user register and save to records.txt
+void registr()
 {
+    string ruserId, rpassword;
+    system("cls");
+    cout << "\t\t\t Enter the Username : ";
+    cin >> ruserId;
+    cout << "\t\t\t Enter the Password : ";
+    cin >> rpassword;
 
-  int id;
+    // Write to the file "records.txt"
+    ofstream record("records.txt", ios::app);
+    record << ruserId << ' ' << rpassword << endl;
+    record.close(); // Close the file
 
-  float marks, per;
+    // Write to the log file "registrationlog.txt"
+    ofstream log("registrationlog.txt", ios::app);
+    log << "New registration: " << ruserId << endl;
+    log.close(); // Close the file
 
-  string name, grade;
-
-  system("cls");
-
-  cout << "\n\n\t\t\t*** Insert Record ***";
-
-  cout << "\n\n Enter Student ID : ";
-
-  cin >> s[i].id;
-
-  cout << "\n\n Enter Student Name: ";
-
-  cin >> s[i].name;
-
-  cout << "\n\n Enter Student Marks: ";
-
-  cin >> s[i].marks;
-
-  // Write to the file "student.txt"
-
-  ofstream record("student.txt", ios::app);
-
-  record << s[i].id << ' ' << s[i].name << ' ' << s[i].marks << endl;
-
-  record.close(); // Close the file
-
-  system("cls");
-
-  cout << "\n\n *** Insert Record Successfully ***";
-
-  s[i].per = s[i].marks / 100 * 100;
-
-  if (s[i].per >= 85)
-
-    s[i].grade = "A+";
-
-  else if (s[i].per >= 75)
-
-    s[i].grade = "A";
-
-  else if (s[i].per >= 65)
-
-    s[i].grade = "B+";
-
-  else if (s[i].per >= 55)
-
-    s[i].grade = "B";
-
-  else if (s[i].per >= 50)
-
-    s[i].grade = "C";
-
-  else if (s[i].per >= 45)
-
-    s[i].grade = "D";
-
-  else if (s[i].per >= 33)
-
-    s[i].grade = "E";
-
-  else
-
-    s[i].grade = "F";
-
-  i++;
+    system("cls");
+    cout << "\n\t\t\t Registration is successful! \n";
+    main();
 }
 
-void search() {
 
-  system("cls");
+void student_login() 
+{
+    int count = 0;
+    int choice;
+    string user, pass, u, p;
 
-  cout << "\n\n\t\t\t *** Search Record ***";
+    system("cls");
 
-  ifstream record("student.txt");
+    cout << "Please enter the following details" << endl;
+    cout << "USERNAME :";
+    cin >> user;
+    cout << "PASSWORD :";
+    cin >> pass;
 
-  if (!record) {
-
-    cout << "\n\n Error: Cannot open file\n";
-
-    return;
-  }
-
-  int id, found = 0;
-
-  cout << "\n\n Enter Student ID: ";
-
-  cin >> id;
-
-  while (!record.eof()) {
-
-    int file_id;
-
-    string name, grade;
-
-    float marks;
-
-    record >> file_id >> name >> marks;
-
-    if (id == file_id) {
-
-      // calculate percentage and grade
-
-      float per = (marks / 500) * 100;
-
-      if (per >= 90)
-
-        grade = "A+";
-
-      else if (per >= 80)
-
-        grade = "A";
-
-      else if (per >= 70)
-
-        grade = "B";
-
-      else if (per >= 60)
-
-        grade = "C";
-
-      else if (per >= 50)
-
-        grade = "D";
-
-      else
-
-        grade = "F";
-
-      cout << "\n\n Student Name: " << name;
-
-      cout << "\n\n Marks: " << marks;
-
-      cout << "\n\n Percentage: " << per << "%";
-
-      cout << "\n\n Grade: " << grade;
-
-      found++;
-
-      break;
+//student username and password retreive from records.txt
+    ifstream input("records.txt");
+    while (input >> u >> p)
+    {
+        if (u == user && p == pass)
+        {
+            count = 1;
+            system("cls");
+        }
     }
-  }
+    input.close();
 
-  if (found == 0) {
+    if (count == 1)
+    {
+        cout << "\nHello " << user << "\nLOGIN SUCCESS\nWelcome to the main page.\n\n";
+          char menu_choice;
+    do {
+        cout << "Welcome to the Student Portal. Please select from the following options" << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
+        cout << "1. Display Class List" << endl;
+        cout << "2. Display Student Reports" << endl;
+        cout << "3.Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> menu_choice;
 
-    cout << "\n\n *** Student ID Not Found ***";
-  }
-}
-
-void update() {
-
-  system("cls");
-
-  cout << "\n\n\t\t\t *** Update Record ***";
-
-  if (i == 0)
-
-    cout << "\n\n *** No record Found ***";
-
-  else
-
-  {
-
-    int id, found = 0;
-
-    cout << "\n\n Enter Student ID: ";
-
-    cin >> id;
-
-    for (int a = 0; a < i; a++) {
-
-      if (id == s[a].id)
-
-      {
-
-        cout << "\n\n Enter Student Name: ";
-
-        cin >> s[a].name;
-
-        cout << "\n\n Enter Student Marks: ";
-
-        cin >> s[a].marks;
-
-        s[a].per = s[a].marks / 100 * 100;
-
-        if (s[a].per >= 85)
-
-          s[a].grade = "A+";
-
-        else if (s[a].per >= 75)
-
-          s[a].grade = "A";
-
-        else if (s[a].per >= 65)
-
-          s[a].grade = "B+";
-
-        else if (s[a].per >= 55)
-
-          s[a].grade = "B";
-
-        else if (s[a].per >= 50)
-
-          s[a].grade = "C";
-
-        else if (s[a].per >= 45)
-
-          s[a].grade = "D";
-
-        else if (s[a].per >= 33)
-
-          s[a].grade = "E";
-
+        switch(menu_choice) {
+            case '1':
+                displayClassList();
+                break;
+            case '2':
+                display();
+                break;
+                
+            case '3':
+                cout << "Returning to main menu..." << endl;
+                main();
+                break;
+                
+            default:
+                cout << "" << endl;
+                break;
+        }
+    } while (menu_choice != '3');
+    }
+    else
+    {
+        cout << "\nLOGIN ERROR\nPlease check your username and password\n";
+        cout << "1. Forgot password?\n2. Register as a new user\n3. Go back to main menu\nEnter your choice: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            forgot();
+        }
+        else if (choice == 2)
+        {
+            registr();
+        }
+        else if (choice == 3)
+        {
+            main();
+        }
         else
-
-          s[a].grade = "F";
-
-        cout << "\n\n *** Update Record Successfully ***";
-
-        found++;
-      }
+        {
+            cout << "Invalid choice\n";
+            student_login();
+        }
     }
 
-    if (found == 0)
-
-      cout << "\n\n *** Student ID Not Found ***";
-  }
+   
 }
+
+
+
+void teacher_login()
+{  
+    int teacher_choice;
+    string teacher_username = "teacher";
+    string teacher_password = "teacher123";
+    string username, password;
+    int num_attempts = 0;
+
+    do {
+        cout << "Enter Teacher username: ";
+        cin >> username;
+
+        cout << "Enter Teacher password: ";
+        cin >> password;
+
+        if (username == teacher_username && password == teacher_password)
+        {
+            cout << "\n login successful!\n";
+            // Add admin features here
+            cin.get();
+            cin.get();
+
+            system("cls"); // Clear screen before displaying menu
+
+            do
+            {
+                cout<<"\nWelcome "<< username<<" to Student Record Management System\n\n";
+                cout<<"1. Add Record\n";
+                cout<<"2. Display Records\n";
+                cout<<"3. Delete Record\n";
+                cout<<"4. Exit\n";
+                cout<<"Enter your choice: ";
+                cin>>teacher_choice;
+
+                switch(teacher_choice)
+                {
+                    case 1:
+                        insert();
+                        break;
+                    case 2:
+                        cin.ignore();// Clear input buffer
+                        display();
+                        cin.get();
+                        cin.get();
+                        break;
+                    case 3:
+                        delete_record();
+                        break;
+                    case 4:
+                        cout << "Returning to main menu...\n";
+                        main();
+                        break;
+                        
+                    default:
+                        cout<<"\nInvalid choice! Please try again.\n";
+                }
+
+                if (teacher_choice != 4) {
+                    cout << "\nPress Enter to continue...\n";
+                    cin.get();
+                }
+
+                system("cls"); // Clear screen before displaying menu again
+
+            }  while(teacher_choice != 4);
+            
+            break;
+        }
+        else
+        {
+            num_attempts++;
+            if (num_attempts >= 3) {
+                cout << "\nToo many login attempts.Please contact admin.\n";
+                exit(0);
+            } else {
+                cout << "\n Teacher login failed. Incorrect username or password. " << 3 - num_attempts << " attempts remaining.\n";
+            }
+        }
+    } while (num_attempts < 3);
+}
+
+
+
+void insert()
+{
+    int id;
+    float marks, per;
+    string name, grade;
+    system("cls");
+    cout<<"\n\n\t\t\t*** Insert Record ***";
+    cout<<"\n\n Enter Student ID : ";
+    cin >> id;
+    cout<<"\n\n Enter Student Name: ";
+    cin >> name;
+    cout<<"\n\n Enter Student Marks: ";
+    cin >> marks;
+
+    // Write to the file "student.txt"
+    ofstream record("student.txt",ios::app);
+    per = marks / 100 * 100;
+    if(per >= 85)
+        grade = "A+";
+    else if(per >=75)
+        grade = "A";
+    else if(per >=65)
+        grade = "B+";
+    else if(per >=55)
+        grade = "B";
+    else if(per >=50)
+        grade = "C";
+    else if(per >=45)
+        grade = "D";
+    else if(per >=33)
+        grade = "E";
+    else 
+        grade = "F";
+    record << id << ' ' << name << ' ' << marks << ' ' << per << ' ' << grade << endl;
+    record.close(); // Close the file
+
+    system("cls");
+    cout<<"\n\n *** Insert Record Successfully ***";
+}
+
+// Function to display all records
+void display()
+{
+    system("cls");
+    cout << "\n\n\t\t\t *** Display All Records ***\n";
+    ifstream record("student.txt");
+    if (!record) {
+        cout << "Error: Cannot open file\n";
+        return;
+    }
+    int id;
+    string name;
+    float marks, per;
+    string grade;
+    cout << "\n\n\t ID\t\t Name\t\t Marks\t\t Percentage\t\t Grade\n\n";
+    while (record >> id >> name >> marks >> per >> grade) {
+        cout << "\t" << id << "\t\t" << name << "\t\t" << marks << "\t\t" << per << "%" << "\t\t" << grade << "\n";
+    }
+    record.close();
+}
+
 
 void delete_record()
+{
+    int id;
+    bool found = false;
+    cout << "Enter the ID of the record to delete: ";
+    cin >> id;
+    ifstream record("student.txt");
+    ofstream temp("temp.txt");
+    if (!record) {
+        cout << "Error: Cannot open file\n";
+        return;
+    }
+    int current_id;
+    string name;
+    float marks, per;
+    string grade;
+    while (record >> current_id >> name >> marks >> per >> grade) {
+        if (current_id != id) {
+            temp << current_id << " " << name << " " << marks << " " << per << " " << grade << endl;
+        } else {
+            found = true;
+        }
+    }
+    record.close();
+    temp.close();
+    if (found) {
+        remove("student.txt");
+        rename("temp.txt", "student.txt");
+        cout << "Record deleted successfully.\n";
+    } else {
+        cout << "Record not found.\n";
+    }
+}
+
+
+
+
+//Parent menu & option declarations - Justyne 
+void viewClassList() {  //This list varies from others in the program as the others rely on data entered by teacher account.  
+                          //information has been placed here as an example of content when viewed on parent account - Justyne
+    cout << "Displaying class list for student: \n" << endl;
+    cout << "Subject: English" << endl;
+    cout << "Teacher: Mrs Florence MacDonald \n" << endl;
+    cout << "Subject: Maths" << endl;
+    cout << "Teacher: Mr George Hope \n" << endl;
+    cout << "Subject: Social Studies" << endl;
+    cout << "Teacher: Miss Jane McCain\n" << endl;
+    cout << "Subject: Science" << endl;
+    cout << "Teacher: Ms Joy Board \n" << endl;
+    cout << "Subject: P.E. & Sports" << endl;
+    cout << "Teacher: Mr Jordan Bulk \n" << endl;
+}
+void viewReports() { //This list varies from others in the program as the others rely on data entered by teacher account.  
+                    //information has been placed here as an example of content when viewed on parent account - Justyne
+    cout << "Displaying current grades for student \n" << endl;
+    cout << "Subject: English" << endl;
+    cout << "Term 1: C- " << endl;
+    cout << "Term 2: B+ " << endl;
+    cout << "Term 3: A- "  << endl;
+    cout << "Term 4: A+ \n" << endl;
+    "\n";
+    cout << "Subject: Maths" << endl;
+    cout << "Term 1: F " << endl;
+    cout << "Term 2: C+ " << endl;
+    cout << "Term 3: B- "  << endl;
+    cout << "Term 4: B+ " << endl;
+    "\n";
+    cout << "Subject: Social Studies" << endl;
+    cout << "Term 1: B+- " << endl;
+    cout << "Term 2: B+ " << endl;
+    cout << "Term 3: A- "  << endl;
+    cout << "Term 4: A \n" << endl;
+    "\n";
+    cout << "Subject: Science" << endl;
+    cout << "Term 1: B- " << endl;
+    cout << "Term 2: B+ " << endl;
+    cout << "Term 3: A+ "  << endl;
+    cout << "Term 4: A+ \n" << endl;
+    "\n";
+    cout << "Subject: P.E." << endl;
+    cout << "Term 1: D " << endl;
+    cout << "Term 2: D+ " << endl;
+    cout << "Term 3: C- "  << endl;
+    cout << "Term 4: C+ \n" << endl;
+    "\n";
+}
+void facultyDirectory() {
+    cout << "Faculty Contacts: " << endl;
+    cout << "----------------" << endl;
+    cout << "School landline: PH: 09 555 0813" << endl;
+    cout << "Principle:  Terry Johns - PH: (ext. 712)" << endl;
+    cout << "Vice-Principle:  George Glass - PH: (ext. 710)" << endl;  
+    cout << "Administration & Reception: Heather McGowan PH: (ext. 705 )" << endl;
+    cout << "Teacher Contacts: " << endl;
+    cout << "----------------" << endl;
+    cout << "English: Mrs Florence MacDonald - email: fmacdonald@school.ac.nz \n" << endl;
+    cout << "Maths: Mr George Hope - email: ghope@school.ac.nz \n" << endl;
+    cout << "Social Studies: Miss Jane McCain = email: jmccain@school.ac.nz\n" << endl;
+    cout << "Science: Ms Joy Board - email: jboard@school.ac.nz \n" << endl;
+    cout << "P.E. & Sports: Mr Jordan Bulk - email: jbulk@school.nz \n" << endl;
+}
+
+void parent_login() //Parent menu and declaration - justyne 
+{
+  int parent_choice;
+  string parent_username = "parent";
+  string parent_password = "parent123";
+  string username, password;
+
+  int login_attempts = 3; // set the number of login attempts to 3
+
+  do {
+    cout << "Enter Parent username: ";
+    cin >> username;
+    cout << "Enter Parent password: ";
+    cin >> password;
+
+    if (username == parent_username && password == parent_password) {
+      cout << "\nLogin successful!\n";
+
+      do {
+        cout << "Welcome to the Parents and Caregivers Menu. Please select from the following options" << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
+        cout << "1. Display Class List" << endl;
+        cout << "2. Display Student Reports" << endl;
+        cout << "3. Directory for teachers & faculty" << endl;
+        cout << "Q. Exit App" << endl;
+        cout << "Enter your choice: ";
+        cin >> parent_choice;
+        cout << "\n";
+        switch (parent_choice) {
+          case 1:
+            viewClassList();
+            break;
+          case 2:
+            viewReports();
+            break;
+          case 3:
+            facultyDirectory();
+            break;
+            case 4:
+            cout << " Thank you for using the School Information System!  Exiting now... \n" << endl;
+            break;
+          default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+      } while (parent_choice != 4);
+      break;
+    } else {
+      login_attempts--; // decrement the number of login attempts
+      if (login_attempts == 0) {
+        cout << "\nLogin failed. You have exceeded the maximum number of login attempts. Please contact admin\n";
+        main();
+        break;
+      } else {
+        cout << "\nLogin failed. Incorrect username or password. " << login_attempts << " attempts remaining.\n";
+      }
+    }
+  } while (login_attempts > 0);
+}
+
+void admin_login() 
 
 {
 
-  system("cls");
+  int admin_choice;
+  
+  string logs;
+  
+  string admin_username = "admin";
 
-  cout << "\n\n\t\t\t *** Delete Record ***";
+  string admin_password = "admin123";
 
-  if (i == 0)
+  string username, password;
 
-    cout << "\n\n *** No record Found ***";
+  cout << "Enter admin username: ";
 
-  else
+  cin >> username;
+
+  cout << "Enter admin password: ";
+
+  cin >> password;
+
+  if (username == admin_username && password == admin_password)
 
   {
 
-    int id, found = 0;
+    cout << "\nAdmin login successful!\n";
 
-    cout << "\n\n Enter Student ID: ";
+    //added admin login log also 
 
-    cin >> id;
+    ofstream record("loginlog.txt", ios::app);
 
-    for (int a = 0; a < i; a++)
+    record << username << endl;
+
+    record.close(); 
+
+    do
 
     {
 
-      if (id == s[a].id)
+      cout << "\nWelcome " << username
+           << " to Student Record Management System\n\n";
+
+      cout << "1. Add Class list\n";
+
+      cout << "2. Delete class\n";
+
+      cout << "3. Display class list\n";
+
+      cout << "4. Exit\n";
+
+      cout << "Enter your choice: ";
+
+      cin >> admin_choice;
+
+      switch (admin_choice)
 
       {
 
-        s[a] = s[a + 1];
+      case 1:
 
-        i--;
+        insertClassList();
 
-        cout << "\n\n *** Delete Record Successfully ***";
+        break;
 
-        found++;
+      case 2:
+      // add code for update/delete class menu
+        int update_choice;
+        cout << "1. Delete Class List\n";
+        cout << "2. Return to last menu";
+        cout << "Enter your choice: ";
+        cin >> update_choice;
+     switch (update_choice)
+      {
+      case 1:
+        deleteClassList();
+        break;
+      default:
+        cout << "\nInvalid choice! Please try again.\n";
+        break;
+      
+      case 2:
+      break;
+      
       }
+      break;
+
+        break;
+
+      
+
+      case 3:
+      displayClassList();
+      break;
+        
+        
+        break;
+
+      case 4:
+
+        cout << "Goodbye!";
+        main();
+        break;
+
+      default:
+
+        cout << "\nInvalid choice! Please try again.\n";
+      }
+
+      if (admin_choice != 4) {
+
+        cout << "\nPress Enter to continue...\n";
+
+        cin.get();
+      }
+
+      system("cls");
+
+      // Clear screen before displaying menu again
+
+    } while (admin_choice != 4);
+
+  } else
+
+  {
+
+    cout << "\nAdmin login failed. Incorrect username or password.\n";
+
+    main();
+  }
+}
+
+
+void insertClassList()
+{
+    string teacher_name, subject, timetable;
+    system("cls");
+    cout<<"\n\n\t\t\t*** Insert class list ***";
+    cout<<"\n\n Enter Teacher's name: ";
+    cin >> teacher_name;
+    cout<<"\n\n Enter Subject: ";
+    cin >> subject;
+    cout<<"\n\n Enter Time: ";
+    cin >> timetable;
+   
+
+    // Write to the file "class.txt"
+    ofstream record("class.txt",ios::app);
+    
+   
+    record << teacher_name << ' ' << subject  << ' ' << timetable << endl;
+    record.close(); // Close the file
+
+    system("cls");
+
+}
+
+//retrieve data from class.txt
+void displayClassList()
+{
+    system("cls");
+    cout << "\n\n\t\t\t*** Class List ***\n\n";
+    
+    // Read from the file "class.txt"
+    ifstream record("class.txt");
+    string teacher_name, subject, timetable;
+     cout<<"\n\n\t\t Teacher name \t\t Subject\t\t Time";
+    while (record >> teacher_name >> subject >> timetable)
+    {
+     cout<<"\n\n\t\t"<< teacher_name <<"\t\t\t" << subject <<"\t\t\t"<<timetable<<"\n";
+       
+    }
+    record.close(); // Close the file
+
+    cout << "\nPress any key to continue...";
+    cin.ignore();
+    cin.get();
+}
+
+//remove data from class.txt
+void deleteClassList() {
+    string teacher_name;
+    bool found = false;
+
+    cout << "Enter the name of the teacher to delete: ";
+    cin >> teacher_name;
+
+    ifstream infile("class.txt");
+    ofstream outfile("temp.txt");
+    if (!infile) {
+        cout << "Error: Cannot open file for reading.\n";
+        return;
+    }
+    string tname, subject, timetable;
+    while (infile >> tname >> subject >> timetable) {
+        if (tname != teacher_name) {
+            outfile << tname << " " << subject << " " << timetable << endl;
+        } else {
+            found = true;
+        }
     }
 
-    if (found == 0)
+    infile.close();
+    outfile.close();
 
-      cout << "\n\n *** Student ID Not Found ***";
-  }
-}
-
-void display()
-
-{
-
-  system("cls");
-
-  cout << "\n\n\t\t\t *** Display All Record ***\n";
-
-  ifstream record("student.txt");
-
-  if (!record) {
-
-    cout << "Error: Cannot open file\n";
-
-    return;
-  }
-
-  int id;
-
-  string name;
-
-  float marks;
-
-  cout << "\n\n\t ID\t\t Name\t\t Marks\t\t Percentage\t\t Grade\n\n";
-
-  while (record >> id >> name >> marks) {
-
-    float per = marks / 100 * 100;
-
-    string grade;
-
-    if (per >= 85)
-
-      grade = "A+";
-
-    else if (per >= 75)
-
-      grade = "A";
-
-    else if (per >= 65)
-
-      grade = "B+";
-
-    else if (per >= 55)
-
-      grade = "B";
-
-    else if (per >= 50)
-
-      grade = "C";
-
-    else if (per >= 45)
-
-      grade = "D";
-
-    else if (per >= 33)
-
-      grade = "E";
-
-    else
-
-      grade = "F";
-
-    cout << "\t" << id << "\t\t" << name << "\t\t" << marks << "\t\t" << per
-         << "%"
-         << "\t\t" << grade << "\n";
-  }
-
-  record.close();
-}
-
-void displayClassList() {
-
-  cout << "Displaying class list for student\n" << endl;
-
-  cout << "Subject: English" << endl;
-
-  cout << "Teacher: Mrs Florence MacDonald \n" << endl;
-
-  cout << "Subject: Maths" << endl;
-
-  cout << "Teacher: Mr George Hope \n" << endl;
-
-  cout << "Subject: Social Studies" << endl;
-
-  cout << "Teacher: Miss Jane McCain\n" << endl;
-
-  cout << "Subject: Science" << endl;
-
-  cout << "Teacher: Ms Joy Board \n" << endl;
-
-  cout << "Subject: P.E." << endl;
-
-  cout << "Teacher: Mr Jordan Bulk \n" << endl;
-
-  // code to display class list
-}
-
-void displayStudentReports() {
-
-  //changed it so that it's not specific to which user and can use it to display on different profiles
-  cout << "Displaying current grades for student:\n" << endl;
-
-  cout << "Subject: English" << endl;
-
-  cout << "Term 1: C- " << endl;
-
-  cout << "Term 2: B+ " << endl;
-
-  cout << "Term 3: A- " << endl;
-
-  cout << "Term 4: A+ " << endl;
-
-  //and here tpp
-
-  cout << "Teacher comments: 'Shown great improvement in his studies so far this year - Mrs MacDonald"
-       << endl;
-
-  cout << endl;
-}
-
-void facultyDirectory() {
-
-  cout << "School landline: PH: 09 555 0813" << endl;
-
-  cout << "Principle: Terry Johns - PH: (ext. 712)" << endl;
-
-  cout << "Vice-Principle:  George Glass - PH: (ext. 710)" << endl;
-
-  cout << "Administration & Reception: Heather McGowan PH: (ext. 705 )" << endl;
-
-  cout << endl;
+    if (found) {
+        remove("class.txt");
+        rename("temp.txt", "class.txt");
+        cout << "Record deleted successfully.\n";
+    } else {
+        cout << "Record not found.\n";
+    }
 }
